@@ -263,13 +263,14 @@ class Turbo1:
                 print(f"Starting from fbest = {fbest:.4}")
                 sys.stdout.flush()
 
+            k=1000
             # Thompson sample to get next suggestions
             while self.n_evals < self.max_evals and self.length >= self.length_min:
                 # Warp inputs
-                X = to_unit_cube(deepcopy(self._X), self.lb, self.ub)
+                X = to_unit_cube(deepcopy(self._X[-k:]), self.lb, self.ub)
 
                 # Standardize values
-                fX = deepcopy(self._fX).ravel()
+                fX = deepcopy(self._fX[-k:]).ravel()
 
                 # Create th next batch
                 X_cand, y_cand, _ = self._create_candidates(
